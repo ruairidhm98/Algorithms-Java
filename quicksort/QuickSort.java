@@ -14,24 +14,26 @@ class QuickSort
     array[j] = temp;
   }
 
+  private static int getMedianIndex(int array[], int i, int j)
+  {
+    int max = Math.max(array[i], array[j]);
+    return max == array[i] ? i : j;
+  }
+
   private static int median(int array[], int i, int j, int k)
   {
     // Need to do this fast as possible, so avoid the overhead of putting these in an array and sorting
     int max = Math.max(array[i], Math.max(array[j], array[k]));
-    int median;
     // Compute max of all 3 and then maximum of the other two to obtain the median
     if (max == array[i])
     {
-      median = Math.max(array[j], array[k]);
-      return median == array[j] ? j : k;
+      return getMedianIndex(array, j, k);
     }
     else if (max == j)
     {
-      median = Math.max(array[i], array[k]);
-      return median == array[i] ? i : k;
+      return getMedianIndex(array, i, k);
     }
-    median = Math.max(array[i], array[j]);
-    return median == array[i] ? i : j;
+    return getMedianIndex(array, i, j);
   }
 
   private static int partition(int array[], int start, int end)
