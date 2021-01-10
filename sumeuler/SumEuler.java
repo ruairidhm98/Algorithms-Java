@@ -49,7 +49,8 @@ class SumEuler
       return;
     }
 
-    long lower = Long.parseLong(args[0]), upper = Long.parseLong(args[1]);
+    long lower = Long.parseLong(args[0]);
+    long upper = Long.parseLong(args[1]);
 
     long start = System.currentTimeMillis();
     long result = SumEuler.sumTotient(lower, upper);
