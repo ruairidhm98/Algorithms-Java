@@ -29,7 +29,7 @@ class QuickSort
     {
       return getMedianIndex(array, j, k);
     }
-    else if (max == j)
+    else if (max == array[j])
     {
       return getMedianIndex(array, i, k);
     }
