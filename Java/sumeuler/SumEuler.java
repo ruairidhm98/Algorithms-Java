@@ -1,5 +1,7 @@
 package sumeuler;
 
+import java.util.LinkedList;
+
 class SumEuler
 {
   private static long hcf(long x, long y)
@@ -18,27 +20,25 @@ class SumEuler
 
   private static long euler(long n)
   {
-    long length = 0;
-
+    LinkedList<Long> list = new LinkedList<Long>();
     for(long i = 1; i < n; ++i)
     {
       if (relprime(n, i))
       {
-        ++length;
+        list.add(i);
       }
     }
-    return length;
+    return list.size();
   }
 
   public static long sumTotient(long lower, long upper)
   {
-    long sum = 0;
-    
+    LinkedList<Long> list = new LinkedList<Long>();
     for (long i = lower; i <= upper; ++i)
     {
-      sum += euler(i);
+      list.add(euler(i));
     }
-    return sum;
+    return list.stream().mapToLong(Long::longValue).sum();
   }
 
   public static void main(String args[])
@@ -60,3 +60,53 @@ class SumEuler
   }
 
 }
+/*
+module Main where
+
+import Control.Parallel.Strategies
+
+hcf :: Int -> Int -> Int
+hcf x 0 = x
+hcf x y =  hcf y $ x `rem` y
+
+relprime :: Int -> Int -> Bool
+relprime x y = hcf x y == 1
+
+eulerSum :: Int -> Int
+eulerSum n = length $ filter (\x -> relprime n x) [1..n]
+
+sumTotient :: (Int, Int) -> Int
+sumTotient (lower, upper) = sum $ map eulerSum [lower..upper]
+
+divConq :: (a -> b) ->
+            a ->
+           (a -> Bool) ->
+           (b -> b -> b) ->
+           (a -> Maybe (a, a)) ->
+            b
+divConq f arg threshold conquer divide = go arg
+  where
+    go arg = case divide arg of
+      Nothing      -> f arg
+      Just (l0,r0) -> conquer l1 r1 `using` strat where
+        l1 = go l0
+        r1 = go r0
+        strat x = do r l1; r r1; return x
+          where r | threshold arg = rseq
+                  | otherwise     = rpar
+
+range :: (Int, Int)
+range = (0,5000)
+
+chunk :: Int
+chunk = 250
+
+divide_range :: (Int, Int) -> Maybe ((Int,Int), (Int,Int))
+divide_range (n1, n2)
+  | n2 - n1 > chunk  = Just ((n1, mid), (mid+1, n2))    
+  | otherwise        = Nothing
+  where
+      mid = (n1+n2) `div` 2
+
+main = print $ divConq sumTotient range (\(x1,x2) -> (x2-x1) <= chunk) (+) divide_range
+*/
