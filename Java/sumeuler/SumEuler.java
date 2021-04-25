@@ -51,15 +51,14 @@ class SumEuler
 
     long lower = Long.parseLong(args[0]);
     long upper = Long.parseLong(args[1]);
-    long beforeUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
 
     long start = System.currentTimeMillis(); 
     long result = SumEuler.sumTotient(lower, upper);
     long end = System.currentTimeMillis();
     System.out.println("Sum of Totient: " + result);
     System.out.println("Elapsed time: " + (end-start) + "ms");
-    long afterUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-    System.out.println(beforeUsedMem-afterUsedMem);
+    long mem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+    System.out.println(mem);
   }
 
 }
