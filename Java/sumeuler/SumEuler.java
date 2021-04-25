@@ -53,7 +53,7 @@ class SumEuler
     long upper = Long.parseLong(args[1]);
     long beforeUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
 
-    long start = System.currentTimeMillis();
+    long start = System.currentTimeMillis(); 
     long result = SumEuler.sumTotient(lower, upper);
     long end = System.currentTimeMillis();
     System.out.println("Sum of Totient: " + result);
