@@ -20,25 +20,25 @@ class SumEuler
 
   private static long euler(long n)
   {
-    LinkedList<Long> list = new LinkedList<Long>();
+    long length = 0, i;
     for(long i = 1; i < n; ++i)
     {
       if (relprime(n, i))
       {
-        list.add(i);
+        ++length;
       }
     }
-    return list.size();
+    return length;
   }
 
   public static long sumTotient(long lower, long upper)
   {
-    LinkedList<Long> list = new LinkedList<Long>();
+    long sum = 0, i;
     for (long i = lower; i <= upper; ++i)
     {
-      list.add(euler(i));
+      sum += euler(i);
     }
-    return list.stream().mapToLong(Long::longValue).sum();
+    return sum;
   }
 
   public static void main(String args[])
@@ -51,12 +51,15 @@ class SumEuler
 
     long lower = Long.parseLong(args[0]);
     long upper = Long.parseLong(args[1]);
+    long beforeUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
 
     long start = System.currentTimeMillis();
     long result = SumEuler.sumTotient(lower, upper);
     long end = System.currentTimeMillis();
     System.out.println("Sum of Totient: " + result);
     System.out.println("Elapsed time: " + (end-start) + "ms");
+    long afterUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+    System.out.println(beforeUsedMem-afterUsedMem);
   }
 
 }
