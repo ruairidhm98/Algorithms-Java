@@ -36,7 +36,7 @@ divConq f arg threshold conquer divide = go arg
                   | otherwise     = rpar
 
 range :: (Int, Int)
-range = (0, 5000)
+range = (0, 100000)
 
 chunk :: Int
 chunk = 250
